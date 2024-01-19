@@ -5,11 +5,22 @@ from data_wrangling_func import read_file_csv
 data_path = 'data/'
 savePath = 'Results/'
 
+
+def input_procesing(stocks_input):
+    stocks_list = stocks_input.split(" ")
+    return stocks_list
+
 def import_data(data_path):
     # data, mean_returns, cov_returns, portfolio_size = import_data(savePath)
     file = 'stock.csv'
-    data = pd.read_csv(data_path + file, sep = ',',header = 0)
+    with open('portfolio.txt') as f:
+        stocks_input = f.read()
+        
+    columns = input_procesing(stocks_input)
+    # columns = input
+    data = pd.read_csv(data_path + file, sep = ',',header = 0, usecols = columns)
     stock_names = data.columns
+
     mean_returns = pd.DataFrame(np.mean(data,axis=0),columns=['means'])
     cov_returns = np.cov(data,rowvar=False) # convert each columns --> variables while rows-->observation
     
@@ -80,13 +91,20 @@ def efficient_frontier_plot(cov_returns,x_optimal_array,ex_port_return_point,sav
         plt.show()
     return risk_point,ret_point
 
-def optimal_weight(data,risk_point,x_optimal_array,ret_point):
-    # read from user
-    expected_annualized_risk = 32 # Input from external
+def optimal_weight(data,risk_point,x_optimal_array,ret_point,save=False):
+    
+    # expected_annualized_risk = 32 # Input from external
+    expected_annualized_risk = int(input("\nEnter your expected_annualized_risk: "))
     idx = np.where((risk_point > expected_annualized_risk) & (risk_point< expected_annualized_risk+1))[0][0]
-    print(f'Stocks: {data.columns}')
+    print(f'Stocks: {data.columns.tolist()}')
     print(f'Optimal weight: {np.round(x_optimal_array[idx],3)}')
     print(f'Annualized Risk: {risk_point[idx]:.2f} \nReturn of the efficient set portfolios: {ret_point[idx][0]:.2f}')
+    if save:
+        title = 'port_weights.txt'
+        with open(f'{savePath}/{title}', 'w') as fp:            
+            fp.write(f'Stocks: {data.columns.tolist()}\n')
+            fp.write(f'Optimal weight: {np.round(x_optimal_array[idx],3)}\n')
+            fp.write(f'Annualized Risk: {risk_point[idx]:.2f} \nReturn of the efficient set portfolios: {ret_point[idx][0]:.2f}')
 
 def sharpe_ratio_opt(mean_returns,cov_returns,portfolio_size,Rf = 2.85):
     # 3% -> annual risk free    
@@ -119,14 +137,10 @@ def main_opt():
     data, mean_returns, cov_returns, portfolio_size = import_data(savePath)
     x_optimal_array, ex_port_return_point = main_func(mean_returns,cov_returns,portfolio_size)
     risk_point,ret_point = efficient_frontier_plot(cov_returns,x_optimal_array,ex_port_return_point,save=True)
-    optimal_weight(data,risk_point,x_optimal_array,ret_point)
+    optimal_weight(data,risk_point,x_optimal_array,ret_point,save=True)
     sharpe_ratio_opt(mean_returns,cov_returns,portfolio_size,Rf = 2.85)
     print("Optimization part done")     
     
 if __name__ == '__main__':
-    data, mean_returns, cov_returns, portfolio_size = import_data(savePath)
-    x_optimal_array, ex_port_return_point = main_func(mean_returns,cov_returns,portfolio_size)
-    risk_point,ret_point = efficient_frontier_plot(x_optimal_array,ex_port_return_point,save=True)
-    optimal_weight(data,risk_point,x_optimal_array,ret_point)
-    sharpe_ratio_opt(mean_returns,cov_returns,portfolio_size,Rf = 2.85)
+    main_opt()
     

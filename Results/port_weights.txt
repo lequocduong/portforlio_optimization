@@ -1,0 +1,4 @@
+Stocks: ['KHP', 'OCB', 'BMI', 'POW', 'SBT']
+Optimal weight: [0.426 0.183 0.295 0.082 0.013]
+Annualized Risk: 30.07 
+Return of the efficient set portfolios: 15.38

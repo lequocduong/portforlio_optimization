@@ -56,13 +56,16 @@ Notice:
 + Efficient Frontier
 + Sharpe ratio
 
-Step : 1 
+--> Read the command in terminal - or read in .txt file ???
+
+Runing procedure
 - Dowload all historical stock data in investing.com
 - Save in folder 'data'
-- Run in terminal python Data_wrangling.py
-- See results in folder data
-- Based on file "Cluster.txt" --> form a portforlion by choosing each stocks from certain clusters
-- Run file Optimization --> see results in file "result_opt.txt"
-- 
+- Run "data_wrangling.py"
+- Read the file "Cluster.txt" and form a porlolio (Done)
+- Input the portfolio via terminal or choosen_portfolio.txt file (via portfolio.txt file)
+- See the Efficient Frontier and choose based on expected return and annualized risk (done)
+- See the weights of portfolio (in Results/optimal_weight.txt)
+
 ********
 Section 1: Stock portfolio

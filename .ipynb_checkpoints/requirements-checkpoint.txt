@@ -6,5 +6,5 @@ matplotlib
 tqdm 
 python-math
 scikit-learn
-
-docplex
+scipy
+cvxpy
