@@ -1,7 +1,6 @@
 Cluster: 1
-['BMI' 'POW' 'SBT']
-Cluster: 2
-['KHP']
-Cluster: 3
 ['OCB']
-Porfolio_Optimization
+Cluster: 2
+['BMI' 'POW' 'SBT']
+Cluster: 3
+['KHP']
