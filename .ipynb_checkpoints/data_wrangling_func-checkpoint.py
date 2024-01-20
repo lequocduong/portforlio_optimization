@@ -40,10 +40,11 @@ def convert_percentage_object_2_float(input):
     '''    
     return float(input.replace('%',''))
 
-def data_wrangling(data_path,save=False):
+def data_wrangling(data_path, save=False):
     '''    
     Transforming and structuring data from one raw form into a desired format
     Only rate of change(ROC) is considered in this function
+    missing value will automatically be filled with 0 (the price stays the same)
     ----------
     Attributes:
     data_path: data path
@@ -52,26 +53,27 @@ def data_wrangling(data_path,save=False):
     data = data_wrangling(data_path)
     '''    
     all_names = os.listdir(data_path) # list all name in a folder
-    data = pd.DataFrame()
     stock_names = []
     for name in all_names:
         if name[:2] == 'VN' or name[-3:] != 'csv':
             continue
-        # print(name)
-        data_temp = read_file_csv(data_path,name)        
-        data_temp = data_temp['Change %']
-        data_temp.rename(f'{name[:3]}',inplace=True)
-        data = pd.concat([data,data_temp],axis=1)
+        data_temp = read_file_csv(data_path,name)  
+        data_temp = data_temp[['Date','Change %']]
+        data_temp.rename(columns={'Change %': f'{name[:3]}' },inplace=True)
+        if name == all_names[0]:
+            data = data_temp
+        else: 
+            data = data.merge(data_temp,how='left',on='Date')
         stock_names.append(f'{name[:3]}')
-
+    data.fillna(0,inplace=True)
     if save:
         title = 'stock.csv'
         if not os.path.exists(f'{savePath}/'):
             os.makedirs( f'{savePath}/')  
-        data.to_csv(f'{savePath}/{title}',index=False)
-    
+        data.to_csv(f'{savePath}/{title}')    
+    data.drop(columns=['Date'],inplace=True)
     return data,stock_names
-
+    
 def correlation_matrix(df,features,title=None,save=False):
     '''    
     Plot Correlation Matrix
@@ -124,6 +126,10 @@ def beta_computation(data,market_data,save=False):
         stock data
     market_data: df.DataFrame
         market data
+    save: bool, default:False
+    ----------
+    Returns:
+    beta_result_df: df.DataFrame
     ----------
     Example:
     Data_wrangling.pybeta_result_df = beta_computation(data,market_data)
@@ -166,9 +172,10 @@ def port_cluster(data,stock_names,save = False):
     mean_returns = pd.DataFrame(np.mean(data,axis=0),columns=['means'])
     cov_returns = np.cov(data, rowvar = False) # convert each columns --> variables while rows-->observation
     cov_returns_df = pd.DataFrame(cov_returns,columns = stock_names, index = stock_names)
-    df = pd.concat([mean_returns, cov_returns_df],axis = 1)
-
-    asset_cluster = KMeans(algorithm='auto', max_iter=600, n_clusters = 3)
+    df = pd.concat([mean_returns, cov_returns_df],axis = 1)    
+    with open('desidered_cluster.txt') as f:
+        n_clusters = f.read()        
+    asset_cluster = KMeans(algorithm='auto', max_iter=600, n_clusters = int(n_clusters))
     asset_cluster.fit(df)
     assets = np.array(stock_names)
     centroids = asset_cluster.cluster_centers_

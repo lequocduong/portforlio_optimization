@@ -2,17 +2,9 @@ Ref:
 1. https://medium.com/@phindulo60/portfolio-optimization-with-python-mean-variance-optimization-mvo-and-markowitzs-efficient-64acb3b61ef6
 2. https://github.com/PaiViji/PythonFinance-PortfolioOptimization/blob/master/Lesson7_ConstrainedPortfolioOptimization/Lesson7_MainContent.ipynb
 
-Target : 
-
+Target :
 - Define the similar stock behaviors based on the daily '% change' (rate of change)
 (based on clustering method) -> form a portfolio 
-Ex:
-Cluster 1
-['OCB']
-Cluster 2 
-['BMI' 'POW' 'SBT']
-Cluster 3
-['KHP'] 
 --> 1st portfolio - ['OCB','POW','KHP'] -> 2nd port - ['OCB','SBT','KHP']
 - Define a method to determine how many we should distribute to each STOCKS (Mean-Variance Optimization)
 - Define the cut loss -- margin by Efficient Frontier 
@@ -20,23 +12,10 @@ Cluster 3
 
 - Wanna strictful rule for high and low volativity --> Add weights of low and high volativity --> Do the optimization (the same as procedure as Mean-Variance Optimization)
 
-Input : 
+Input: 
 - Historical Data (OCB - KHP - BMI) <- time-of-interest ('OCB') up to 24/11/2023
 - The total Capital (current amout in STOCK account)
 Output :
-File : Main.ipny
-- Weight of each stocks, which means the percentage should we invest for best revenue
---> Mean_Variance_Optimization: (Optimal Weights)
-(trade off between expected return and risk)
-BMI: 0.26
-OCB: 0.28
-KHP: 0.45
---> Efficient Frontier Optimization :
-(identify portfolios that provide the highest return for a given level of risk.)
- show in DataFrame - 
-[OCB,KHP,BMI] - [0.0, 0.69, 0.31] of your budgets
-- Return 20.11% - Risk 2.24
-
 
 
 Optimizing function
@@ -61,11 +40,18 @@ Notice:
 Runing procedure
 - Dowload all historical stock data in investing.com
 - Save in folder 'data'
-- Run "data_wrangling.py"
+- Run "data_wrangling.py" (type No clusters in "desidered_cluster.txt")
 - Read the file "Cluster.txt" and form a porlolio (Done)
 - Input the portfolio via terminal or choosen_portfolio.txt file (via portfolio.txt file)
-- See the Efficient Frontier and choose based on expected return and annualized risk (done)
+- See the Efficient Frontier and choose based on expected return and annualized risk (in terminal)
 - See the weights of portfolio (in Results/optimal_weight.txt)
 
 ********
 Section 1: Stock portfolio
+Time: 02/01/2021 - 01/19/2024
+1. The price range is suitable for long term investment (10-15kVVNDdxsd/share)
+Finance (Insurrance- stock broker): BMI MIG VIX AGR
+Bank:  MSB OCB SHB EVF
+BDS(real estate): DXG NVL TCH ASM
+FMCG: SBT(sugar) - IDI (aquatic food) - BAF (Livestocki) - HSL(Agricultural commodities)
+DV - công: KHP (electricity) - VOS(sea transportation) - POW (electricity) - CII (Infrastructure Investment)
