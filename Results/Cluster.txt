@@ -1,10 +1,10 @@
 Cluster: 1
-['KHP' 'SHB' 'OCB' 'BMI' 'HSL' 'EVF' 'MIG' 'POW' 'MSB' 'SBT']
+['BAF' 'NVL' 'OCB' 'EVF' 'MSB']
 Cluster: 2
-['DXG' 'TCH' 'AGR' 'VIX' 'CII']
-Cluster: 3
-['BAF' 'NVL']
-Cluster: 4
 ['ASM' 'IDI']
+Cluster: 3
+['DXG' 'TCH' 'AGR' 'VIX' 'CII']
+Cluster: 4
+['KHP' 'SHB' 'BMI' 'HSL' 'MIG' 'POW' 'SBT']
 Cluster: 5
 ['VOS']

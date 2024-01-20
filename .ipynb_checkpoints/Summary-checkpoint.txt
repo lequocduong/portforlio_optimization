@@ -49,7 +49,7 @@ Runing procedure
 ********
 Section 1: Stock portfolio
 Time: 02/01/2021 - 01/19/2024
-1. The price range is suitable for long term investment (10-15kVVNDdxsd/share)
+1. The price range is suitable for long term investment (10-15kVVNDdxsd/share --> mid cap) 
 Finance (Insurrance- stock broker): BMI MIG VIX AGR
 Bank:  MSB OCB SHB EVF
 BDS(real estate): DXG NVL TCH ASM
